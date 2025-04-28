@@ -65,6 +65,11 @@ type LSPConfig struct {
 	Options  any      `json:"options"`
 }
 
+// TUIConfig defines the configuration for the Terminal User Interface.
+type TUIConfig struct {
+	Theme string `json:"theme,omitempty"`
+}
+
 // Config is the main configuration structure for the application.
 type Config struct {
 	Data         Data                              `json:"data"`
@@ -76,6 +81,7 @@ type Config struct {
 	Debug        bool                              `json:"debug,omitempty"`
 	DebugLSP     bool                              `json:"debugLSP,omitempty"`
 	ContextPaths []string                          `json:"contextPaths,omitempty"`
+	TUI          TUIConfig                         `json:"tui"`
 }
 
 // Application constants
@@ -203,6 +209,7 @@ func configureViper() {
 func setDefaults(debug bool) {
 	viper.SetDefault("data.directory", defaultDataDirectory)
 	viper.SetDefault("contextPaths", defaultContextPaths)
+	viper.SetDefault("tui.theme", "catppuccin")
 
 	if debug {
 		viper.SetDefault("debug", true)
