@@ -81,8 +81,8 @@ func getHelpWidget(helpText string) string {
 	}
 
 	return styles.Padded().
-		Background(t.TextMuted()).        // Use theme TextMuted instead of ForgroundMid
-		Foreground(t.BackgroundDarker()). // Use theme BackgroundDarker
+		Background(t.TextMuted()).
+		Foreground(t.BackgroundDarker()).
 		Bold(true).
 		Render(helpText)
 }
@@ -181,8 +181,8 @@ func (m *statusCmp) projectDiagnostics() string {
 	// If any server is initializing, show that status
 	if initializing {
 		return lipgloss.NewStyle().
-			Background(t.BackgroundDarker()). // Use theme BackgroundDarker
-			Foreground(t.Warning()).          // Use theme Warning instead of Peach
+			Background(t.BackgroundDarker()).
+			Foreground(t.Warning()).
 			Render(fmt.Sprintf("%s Initializing LSP...", styles.SpinnerIcon))
 	}
 
@@ -215,29 +215,29 @@ func (m *statusCmp) projectDiagnostics() string {
 
 	if len(errorDiagnostics) > 0 {
 		errStr := lipgloss.NewStyle().
-			Background(t.BackgroundDarker()). // Use theme BackgroundDarker
-			Foreground(t.Error()).            // Use theme Error
+			Background(t.BackgroundDarker()).
+			Foreground(t.Error()).
 			Render(fmt.Sprintf("%s %d", styles.ErrorIcon, len(errorDiagnostics)))
 		diagnostics = append(diagnostics, errStr)
 	}
 	if len(warnDiagnostics) > 0 {
 		warnStr := lipgloss.NewStyle().
-			Background(t.BackgroundDarker()). // Use theme BackgroundDarker
-			Foreground(t.Warning()).          // Use theme Warning
+			Background(t.BackgroundDarker()).
+			Foreground(t.Warning()).
 			Render(fmt.Sprintf("%s %d", styles.WarningIcon, len(warnDiagnostics)))
 		diagnostics = append(diagnostics, warnStr)
 	}
 	if len(hintDiagnostics) > 0 {
 		hintStr := lipgloss.NewStyle().
-			Background(t.BackgroundDarker()). // Use theme BackgroundDarker
-			Foreground(t.Text()).             // Use theme Text
+			Background(t.BackgroundDarker()).
+			Foreground(t.Text()).
 			Render(fmt.Sprintf("%s %d", styles.HintIcon, len(hintDiagnostics)))
 		diagnostics = append(diagnostics, hintStr)
 	}
 	if len(infoDiagnostics) > 0 {
 		infoStr := lipgloss.NewStyle().
-			Background(t.BackgroundDarker()). // Use theme BackgroundDarker
-			Foreground(t.Info()).             // Use theme Info instead of Peach
+			Background(t.BackgroundDarker()).
+			Foreground(t.Info()).
 			Render(fmt.Sprintf("%s %d", styles.InfoIcon, len(infoDiagnostics)))
 		diagnostics = append(diagnostics, infoStr)
 	}
