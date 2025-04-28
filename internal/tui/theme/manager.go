@@ -2,7 +2,11 @@ package theme
 
 import (
 	"fmt"
+	"slices"
+	"strings"
 	"sync"
+	
+	"github.com/opencode-ai/opencode/internal/config"
 )
 
 // Manager handles theme registration, selection, and retrieval.
@@ -26,7 +30,7 @@ func RegisterTheme(name string, theme Theme) {
 	defer globalManager.mu.Unlock()
 
 	globalManager.themes[name] = theme
-	
+
 	// If this is the first theme, make it the default
 	if globalManager.currentName == "" {
 		globalManager.currentName = name
@@ -44,6 +48,13 @@ func SetTheme(name string) error {
 	}
 
 	globalManager.currentName = name
+	
+	// Update the config file using viper
+	if err := updateConfigTheme(name); err != nil {
+		// Log the error but don't fail the theme change
+		fmt.Printf("Warning: Failed to update config file with new theme: %v\n", err)
+	}
+	
 	return nil
 }
 
@@ -77,6 +88,9 @@ func AvailableThemes() []string {
 	for name := range globalManager.themes {
 		names = append(names, name)
 	}
+	slices.SortFunc(names, func(a, b string) int {
+		return strings.Compare(a, b)
+	})
 	return names
 }
 
@@ -88,3 +102,10 @@ func GetTheme(name string) Theme {
 
 	return globalManager.themes[name]
 }
+
+// updateConfigTheme updates the theme setting in the configuration file
+func updateConfigTheme(themeName string) error {
+	// Use the config package to update the theme
+	return config.UpdateTheme(themeName)
+}
+

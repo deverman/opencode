@@ -121,7 +121,7 @@ func (t *themeDialogCmp) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (t *themeDialogCmp) View() string {
 	currentTheme := theme.CurrentTheme()
 	baseStyle := styles.BaseStyle()
-	
+
 	if len(t.themes) == 0 {
 		return baseStyle.Padding(1, 2).
 			Border(lipgloss.RoundedBorder()).
@@ -191,3 +191,4 @@ func NewThemeDialogCmp() ThemeDialog {
 		currentTheme: "",
 	}
 }
+

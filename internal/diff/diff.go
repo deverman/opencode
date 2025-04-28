@@ -822,52 +822,7 @@ func FormatDiff(diffText string, opts ...SideBySideOption) (string, error) {
 	}
 
 	var sb strings.Builder
-	config := NewSideBySideConfig(opts...)
-	t := theme.CurrentTheme()
-
-	// Add file header
-	removeIcon := lipgloss.NewStyle().
-		Background(t.DiffRemovedBg()).
-		Foreground(t.DiffRemoved()).
-		Render("⏹")
-	addIcon := lipgloss.NewStyle().
-		Background(t.DiffAddedBg()).
-		Foreground(t.DiffAdded()).
-		Render("⏹")
-
-	fileName := lipgloss.NewStyle().
-		Background(t.DiffContextBg()).
-		Foreground(t.TextMuted()).
-		Render(" " + diffResult.OldFile)
-	sb.WriteString(
-		lipgloss.NewStyle().
-			Background(t.DiffContextBg()).
-			Padding(0, 1, 0, 1).
-			Foreground(t.TextMuted()).
-			BorderStyle(lipgloss.NormalBorder()).
-			BorderTop(true).
-			BorderBottom(true).
-			BorderForeground(t.TextMuted()).
-			BorderBackground(t.DiffContextBg()).
-			Width(config.TotalWidth).
-			Render(
-				lipgloss.JoinHorizontal(lipgloss.Top,
-					removeIcon,
-					addIcon,
-					fileName,
-				),
-			) + "\n",
-	)
-
 	for _, h := range diffResult.Hunks {
-		// Render hunk header
-		sb.WriteString(
-			lipgloss.NewStyle().
-				Background(t.DiffContextBg()).
-				Foreground(t.DiffHunkHeader()).
-				Width(config.TotalWidth).
-				Render(h.Header) + "\n",
-		)
 		sb.WriteString(RenderSideBySideHunk(diffResult.OldFile, h, opts...))
 	}
 
